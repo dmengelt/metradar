@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -29,10 +30,14 @@ public class RadarActivity extends Activity implements LocationListener {
     private LocationManager locManager;
     private String provider;
 
+    private LinearLayout legend;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        legend = (LinearLayout) findViewById(R.id.legend);
+        legend.setVisibility(LinearLayout.INVISIBLE);
         updateRadar();
     }
 
@@ -59,7 +64,7 @@ public class RadarActivity extends Activity implements LocationListener {
     @Override
     protected void onResume() {
         super.onResume();
-        if(locManager != null) {
+        if (locManager != null) {
             locManager.requestLocationUpdates(provider, 60000, 1000, this);
         }
     }
@@ -67,7 +72,9 @@ public class RadarActivity extends Activity implements LocationListener {
     @Override
     protected void onPause() {
         super.onPause();
-        locManager.removeUpdates(this);
+        if (locManager != null) {
+            locManager.removeUpdates(this);
+        }
     }
 
     @Override
@@ -91,41 +98,37 @@ public class RadarActivity extends Activity implements LocationListener {
     }
 
     private void updateRadar() {
+        legend.setVisibility(LinearLayout.GONE);
         final ProgressDialog dlg = new ProgressDialog(this);
         dlg.setTitle("Loading radar data...");
-        dlg.setIndeterminate(false);
+        //dlg.setIndeterminate(false);
         dlg.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         dlg.show();
 
         final RadarPhotoView radarImageView = (RadarPhotoView) findViewById(R.id.imageView);
+        final LinearLayout legend = (LinearLayout) findViewById(R.id.legend);
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://radar.netdata.ch/update.php",
-                new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onFinish() {
-                        // 710 x 640
-                        Ion.with(RadarActivity.this).load("http://radar.netdata.ch/newest.gif").noCache().progressDialog(dlg).intoImageView(radarImageView).setCallback(new FutureCallback<ImageView>() {
-                            @Override
-                            public void onCompleted(Exception e, ImageView result) {
-                                dlg.cancel();
-                                //radarImageView.setMarker(R.drawable.maps_button_on, 500, 500);
-                                //updateLocationPin(result);
-                                if(locManager == null) {
-                                    setLocationProvider();
-                                }
-                            }
-                        });
-                    }
+        Ion.with(RadarActivity.this).load("http://radar.netdata.ch/newest.gif").noCache().progressDialog(dlg).intoImageView(radarImageView).setCallback(new FutureCallback<ImageView>() {
+            @Override
+            public void onCompleted(Exception e, ImageView result) {
+                dlg.cancel();
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        super.onFailure(statusCode, headers, responseBody, error);
-                        dlg.cancel();
-                        Toast.makeText(getApplicationContext(), "Unable to retrieve radar data", Toast.LENGTH_SHORT).show();
-                        // TODO - display cached/old gif or load error page into image view
+                // no error
+                if (e == null) {
+                    legend.setVisibility(LinearLayout.VISIBLE);
+
+                    if (locManager == null) {
+                        setLocationProvider();
                     }
-                });
+                }
+
+                // error handling
+                else {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve radar data", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         radarImageView.setScaleType(ScaleType.CENTER_CROP);
 
@@ -138,7 +141,6 @@ public class RadarActivity extends Activity implements LocationListener {
         provider = locManager.getBestProvider(criteria, true);
         Location loc = locManager.getLastKnownLocation(provider);
         locManager.requestLocationUpdates(provider, 5000, 5, this);
-        //setLocation(loc);
     }
 
     private void setLocation(Location loc) {
@@ -152,7 +154,7 @@ public class RadarActivity extends Activity implements LocationListener {
             int x = ((int) ApproxSwissProj.WGStoCHx(latitude, longitude) / 1000);
             int y = ((int) ApproxSwissProj.WGStoCHy(latitude, longitude) / 1000);
 
-            radarImageView.setMarker(R.drawable.red_pin, y - 250, 480 -x);
+            radarImageView.setMarker(R.drawable.red_pin, y - 250, 480 - x);
 
         } else {
             radarImageView.removeMarker();
