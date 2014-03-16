@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ch.filecloud.metradar.iml" filepath="$PROJECT_DIR$/ch.filecloud.metradar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ch.filecloud.metradar.iml" filepath="$PROJECT_DIR$/ch.filecloud.metradar.iml" />
       <module fileurl="file://$PROJECT_DIR$/metradar/metradar.iml" filepath="$PROJECT_DIR$/metradar/metradar.iml" />
     </modules>
   </component>

@@ -19,11 +19,11 @@ public class AboutActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		TextView urlText;
-		urlText = (TextView) findViewById(R.id.textView4);
-		String text = "<a href='http://www.metradar.ch/2009/pc/'>http://www.metradar.ch/2009/pc/</a>";
-		urlText.setText(Html.fromHtml(text));
-		urlText.setMovementMethod(LinkMovementMethod.getInstance());
+//		TextView urlText;
+//		urlText = (TextView) findViewById(R.id.textView4);
+//		String text = "<a href='http://www.metradar.ch/2009/pc/'>http://www.metradar.ch/2009/pc/</a>";
+//		urlText.setText(Html.fromHtml(text));
+//		urlText.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	@Override

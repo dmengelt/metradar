@@ -1,16 +1,22 @@
 package ch.filecloud.metradar;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -18,10 +24,6 @@ import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.apache.http.Header;
 
 import ch.filecloud.metradar.util.ApproxSwissProj;
 
@@ -35,7 +37,15 @@ public class RadarActivity extends Activity implements LocationListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+//        ActionBar actionBar = getActionBar();
+//        if(actionBar != null) {
+//            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D9000000")));
+//        }
+
         setContentView(R.layout.main);
+
         legend = (LinearLayout) findViewById(R.id.legend);
         legend.setVisibility(LinearLayout.INVISIBLE);
         updateRadar();
@@ -53,8 +63,8 @@ public class RadarActivity extends Activity implements LocationListener {
             case R.id.menu_refresh:
                 updateRadar();
                 return true;
-            case R.id.menu_about:
-                Intent intent = new Intent(this, AboutActivity.class);
+            case R.id.menu_settings:
+                Intent intent = new Intent(this, UserSettingsActivity.class);
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
@@ -66,6 +76,13 @@ public class RadarActivity extends Activity implements LocationListener {
         super.onResume();
         if (locManager != null) {
             locManager.requestLocationUpdates(provider, 60000, 1000, this);
+        }
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RadarActivity.this);
+        if(sharedPrefs.getBoolean("pref_legend", true)){
+            legend.setVisibility(LinearLayout.VISIBLE);
+        } else {
+            legend.setVisibility(LinearLayout.GONE);
         }
     }
 
@@ -115,10 +132,13 @@ public class RadarActivity extends Activity implements LocationListener {
 
                 // no error
                 if (e == null) {
-                    legend.setVisibility(LinearLayout.VISIBLE);
-
                     if (locManager == null) {
                         setLocationProvider();
+                    }
+
+                    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RadarActivity.this);
+                    if(sharedPrefs.getBoolean("pref_legend", true)){
+                        legend.setVisibility(LinearLayout.VISIBLE);
                     }
                 }
 

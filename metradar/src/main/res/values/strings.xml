@@ -7,7 +7,6 @@
     <string name="large_about">About</string>
     <string name="about_title">An app which provides the latest weather radar for switzerland.</string>
     <string name="about_text">"This app fetches the radar images from metradar.ch! All credits goes to metradar. Thanks for providing such a great service. You can support metradar.ch by buying one of their products."</string>
-    <string name="placeholder">[PLACEHOLDER]</string>
     <string name="link_netdata">app by netdata.ch</string>
     <string name="small_flash">Blitze</string>
     <string name="small_moderate">Mässig</string>
