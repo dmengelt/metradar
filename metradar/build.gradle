@@ -11,10 +11,21 @@ android {
         versionCode 001
         versionName "0.0.1"
     }
+
+    signingConfigs {
+        release {
+            storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
+            storePassword System.console().readLine("\n\$ Enter keystore password: ")
+            keyAlias System.console().readLine("\n\$ Enter key alias: ")
+            keyPassword System.console().readLine("\n\$ Enter key password: ")
+        }
+    }
+
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -22,7 +33,6 @@ android {
 dependencies {
     compile 'com.google.android.gms:play-services:4.0.30'
     compile 'com.android.support:support-v4:19.0.0'
-    compile 'com.loopj.android:android-async-http:1.4.4'
     compile 'com.koushikdutta.ion:ion:1.2.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.2'
 }
