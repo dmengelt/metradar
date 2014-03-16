@@ -12,10 +12,31 @@
             />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Information" >
+    <PreferenceCategory android:title="Information">
+        <Preference android:title="About metradar">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.meteoradar.ch/en/ueber_uns.php/"/>
+
+        </Preference>
+
+        <Preference android:title="metradar products">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://www.meteoradar.ch/en/products.php"/>
+
+        </Preference>
+
         <Preference
-            android:title="App version"
-            android:summary="1.0.0" />
+            android:title="data source"
+            android:summary="MeteoSchweiz and nowcast"/>
+
+        <Preference
+            android:id="@+id/appVersion"
+            android:key="app_version"
+            android:title="App version"/>
 
     </PreferenceCategory>
 

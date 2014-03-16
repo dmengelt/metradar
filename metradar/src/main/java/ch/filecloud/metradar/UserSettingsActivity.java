@@ -3,6 +3,7 @@ package ch.filecloud.metradar;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.view.MenuItem;
@@ -16,8 +17,7 @@ import ch.filecloud.metradar.R;
 public class UserSettingsActivity extends PreferenceActivity{
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState)
-    {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
 
@@ -28,10 +28,11 @@ public class UserSettingsActivity extends PreferenceActivity{
     public static class MyPreferenceFragment extends PreferenceFragment
     {
         @Override
-        public void onCreate(final Bundle savedInstanceState)
-        {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.layout.prefs);
+            Preference appVersion = findPreference("app_version");
+            appVersion.setSummary(BuildConfig.VERSION_NAME);
         }
     }
 

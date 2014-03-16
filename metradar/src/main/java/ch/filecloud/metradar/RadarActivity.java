@@ -38,17 +38,13 @@ public class RadarActivity extends Activity implements LocationListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-//        ActionBar actionBar = getActionBar();
-//        if(actionBar != null) {
-//            actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#D9000000")));
-//        }
-
         setContentView(R.layout.main);
 
-        legend = (LinearLayout) findViewById(R.id.legend);
-        legend.setVisibility(LinearLayout.INVISIBLE);
-        updateRadar();
+        if(savedInstanceState == null) {
+            legend = (LinearLayout) findViewById(R.id.legend);
+            legend.setVisibility(LinearLayout.INVISIBLE);
+            updateRadar();
+        }
     }
 
     @Override
