@@ -33,14 +33,10 @@ public class RadarActivity extends Activity implements LocationListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main);
-
-        if(savedInstanceState == null) {
-            legend = (LinearLayout) findViewById(R.id.legend);
-            legend.setVisibility(LinearLayout.INVISIBLE);
-            updateRadar();
-        }
+        legend = (LinearLayout) findViewById(R.id.legend);
+        legend.setVisibility(LinearLayout.INVISIBLE);
+        updateRadar();
     }
 
     @Override
@@ -71,7 +67,7 @@ public class RadarActivity extends Activity implements LocationListener {
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RadarActivity.this);
-        if(sharedPrefs.getBoolean("pref_legend", true)){
+        if (sharedPrefs.getBoolean("pref_legend", true)) {
             legend.setVisibility(LinearLayout.VISIBLE);
         } else {
             legend.setVisibility(LinearLayout.GONE);
@@ -129,7 +125,7 @@ public class RadarActivity extends Activity implements LocationListener {
                     }
 
                     SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(RadarActivity.this);
-                    if(sharedPrefs.getBoolean("pref_legend", true)){
+                    if (sharedPrefs.getBoolean("pref_legend", true)) {
                         legend.setVisibility(LinearLayout.VISIBLE);
                     }
                 }
