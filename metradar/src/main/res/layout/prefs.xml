@@ -36,7 +36,8 @@
         <Preference
             android:id="@+id/appVersion"
             android:key="app_version"
-            android:title="App version"/>
+            android:title="App version"
+            android:enabled="false"/>
 
     </PreferenceCategory>
 
