@@ -12,4 +12,12 @@
     <string name="no_internet_connection">Your internet connection may be down! Please make sure you have a 3G or wifi connection.</string>
     <string name="connection_error">Whoops! Something went wrong. Please try again later.</string>
     <string name="small_snow">Snow</string>
+
+    <!-- Location / Google Play Services strings -->
+    <string name="resolved">Error resolved. Please re-try operation.</string>
+    <string name="no_resolution">Google Play services: unable to resolve connection error.</string>
+    <string name="unknown_activity_request_code">
+        Received an unknown activity request code %1$d in onActivityResult.
+    </string>
+    <string name="play_services_available">Google Play services is available</string>
 </resources>

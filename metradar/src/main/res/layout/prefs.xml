@@ -3,11 +3,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <PreferenceCategory android:title="Legend" >
+    <PreferenceCategory android:title="Settings" >
         <CheckBoxPreference
             android:key="pref_legend"
             android:title="Show legend"
             android:summary="Whether to show the legend or not"
+            android:defaultValue="true"
+            />
+        <CheckBoxPreference
+            android:key="pref_location_updates"
+            android:title="Enable location updates"
+            android:summary="Whether to update the location or not"
             android:defaultValue="true"
             />
     </PreferenceCategory>
